@@ -28,6 +28,7 @@ func getItem(isbn string) (*book, error) {
 
 	bk := new(book)
 	err = dynamodbattribute.UnmarshalMap(result.Item, bk)
+
 	if err != nil {
 		return nil, err
 	}

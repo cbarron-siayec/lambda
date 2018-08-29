@@ -1,0 +1,152 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
+)
+
+var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
+var db = dynamodb.New(session.New(), aws.NewConfig().WithRegion("us-west-1"))
+
+type estudio_mercado struct {
+	administracion        string `json:"administracion"`
+	aguaDrenaje           string `json:"aguaDrenaje"`
+	alumbrado             string `json:"alumbrado"`
+	callesParquesJardines string `json:"callesParquesJardines"`
+	colaboradoresAcceso   string `json:"colaboradoresAcceso"`
+	comentarios           string `json:"comentarios"`
+	duplicarTrabajo       string `json:"duplicarTrabajo"`
+	fecha                 string `json:"fecha"`
+	horasDia              string `json:"horasDia"`
+	infraestructuraNube   string `json:""`
+	manejoDatos           string `json:"manejoDatos"`
+	mercados              string `json:"mercados"`
+	nombreColaborador     string `json:"nombreColaborador"`
+	personalExclusivo     string `json:"personalExclusivo"`
+	presupuesto           string `json:"presupuesto"`
+	seguridadPublica      string `json:"seguridadPublica"`
+	serviciosLimpia       string `json:"serviciosLimpia"`
+	tramites              string `json:"tramites"`
+	utilidad              string `json:"utilidad"`
+}
+
+func serverError(err error) (events.APIGatewayProxyResponse, error) {
+	errorLogger.Println(err.Error())
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: http.StatusInternalServerError,
+		Body:       http.StatusText(http.StatusInternalServerError),
+	}, nil
+}
+
+func clientError(status int) (events.APIGatewayProxyResponse, error) {
+	return events.APIGatewayProxyResponse{
+		StatusCode: status,
+		Body:       http.StatusText(status),
+	}, nil
+}
+
+func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+
+	if req.Headers["Content-Type"] != "application/json" {
+		return clientError(http.StatusNotAcceptable)
+	}
+
+	nuevoRegistro := new(estudio_mercado)
+
+	err := json.Unmarshal([]byte(req.Body), nuevoRegistro)
+	if err != nil {
+		return clientError(http.StatusUnprocessableEntity)
+	}
+	if nuevoRegistro.fecha == "" || nuevoRegistro.nombreColaborador == "" {
+		return clientError(http.StatusBadRequest)
+	}
+
+	err = putItem(nuevoRegistro)
+	if err != nil {
+		return serverError(err)
+	}
+	return events.APIGatewayProxyResponse{
+		StatusCode: 201,
+		Headers:    map[string]string{"Registro": fmt.Sprintln(nuevoRegistro)},
+	}, nil
+}
+
+func putItem(nuevoRegistro *estudio_mercado) error {
+
+	input := &dynamodb.PutItemInput{
+		TableName: aws.String("Estudio_Mercado"),
+		Item: map[string]*dynamodb.AttributeValue{
+			"administracion": {
+				S: aws.String(nuevoRegistro.administracion),
+			},
+			"aguaDrenaje": {
+				S: aws.String(nuevoRegistro.aguaDrenaje),
+			},
+			"alumbrado": {
+				S: aws.String(nuevoRegistro.alumbrado),
+			},
+			"callesParquesJardines": {
+				S: aws.String(nuevoRegistro.callesParquesJardines),
+			},
+			"colaboradoresAcceso": {
+				S: aws.String(nuevoRegistro.colaboradoresAcceso),
+			},
+			"comentarios": {
+				S: aws.String(nuevoRegistro.comentarios),
+			},
+			"duplicarTrabajo": {
+				S: aws.String(nuevoRegistro.duplicarTrabajo),
+			},
+			"fecha": {
+				S: aws.String(nuevoRegistro.fecha),
+			},
+			"horasDia": {
+				S: aws.String(nuevoRegistro.horasDia),
+			},
+			"infraestructuraNube": {
+				S: aws.String(nuevoRegistro.infraestructuraNube),
+			},
+			"mercados": {
+				S: aws.String(nuevoRegistro.mercados),
+			},
+			"nombreColaborador": {
+				S: aws.String(nuevoRegistro.nombreColaborador),
+			},
+			"personalExclusivo": {
+				S: aws.String(nuevoRegistro.personalExclusivo),
+			},
+			"presupuesto": {
+				S: aws.String(nuevoRegistro.presupuesto),
+			},
+			"seguridadPublica": {
+				S: aws.String(nuevoRegistro.seguridadPublica),
+			},
+			"serviciosLimpia": {
+				S: aws.String(nuevoRegistro.serviciosLimpia),
+			},
+			"tramites": {
+				S: aws.String(nuevoRegistro.tramites),
+			},
+			"utilidad": {
+				S: aws.String(nuevoRegistro.utilidad),
+			},
+		},
+	}
+
+	_, err := db.PutItem(input)
+	return err
+}
+
+func main() {
+	lambda.Start(handler)
+}

@@ -11,10 +11,9 @@ type book struct {
 }
 
 func show() (*book, error) {
-	bk := &book{
-		ISBN:   "978-1420931693",
-		Title:  "The Republic",
-		Author: "Plato",
+	bk, err := getItem("978-0486298238")
+	if err != nil {
+		return nil, err
 	}
 	return bk, nil
 }

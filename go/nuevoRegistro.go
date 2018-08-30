@@ -57,36 +57,26 @@ func clientError(status int) (events.APIGatewayProxyResponse, error) {
 
 func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
-	test := events.APIGatewayProxyRequest{
-		Headers: map[string]string{"Content-Type": "application/json"},
-		Body:    `{"NombreColaborador":"Juan Valez","Fecha":"2018/08/30"}`,
-	}
-
 	if req.Headers["Content-Type"] != "application/json" {
 		return clientError(http.StatusNotAcceptable)
 	}
 
 	nuevoRegistro := new(estudio_mercado)
-	registroNuevo := new(estudio_mercado)
 	err := json.Unmarshal([]byte(req.Body), &nuevoRegistro)
-	errr := json.Unmarshal([]byte(test.Body), &registroNuevo)
-	if errr != nil {
+	if err != nil {
 		return clientError(http.StatusUnprocessableEntity)
 	}
-	println(test.Headers["Content-Type"])
-	println(registroNuevo.NombreColaborador)
-	println(registroNuevo.Fecha)
-	if registroNuevo.Fecha == "" || registroNuevo.NombreColaborador == "" {
+	if nuevoRegistro.Fecha == "" || nuevoRegistro.NombreColaborador == "" {
 		return clientError(http.StatusBadRequest)
 	}
 
-	err = putItem(registroNuevo)
+	err = putItem(nuevoRegistro)
 	if err != nil {
 		return serverError(err)
 	}
 	return events.APIGatewayProxyResponse{
 		StatusCode: 201,
-		Headers:    map[string]string{"Registro": fmt.Sprintln(test)},
+		Headers:    map[string]string{"Registro": fmt.Sprintln(req)},
 	}, nil
 }
 

@@ -18,25 +18,25 @@ var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
 var db = dynamodb.New(session.New(), aws.NewConfig().WithRegion("us-west-1"))
 
 type estudio_mercado struct {
-	administracion        string `json:"administracion"`
-	aguaDrenaje           string `json:"aguaDrenaje"`
-	alumbrado             string `json:"alumbrado"`
-	callesParquesJardines string `json:"callesParquesJardines"`
-	colaboradoresAcceso   string `json:"colaboradoresAcceso"`
-	comentarios           string `json:"comentarios"`
-	duplicarTrabajo       string `json:"duplicarTrabajo"`
-	fecha                 string `json:"fecha"`
-	horasDia              string `json:"horasDia"`
-	infraestructuraNube   string `json:""`
-	manejoDatos           string `json:"manejoDatos"`
-	mercados              string `json:"mercados"`
-	nombreColaborador     string `json:"nombreColaborador"`
-	personalExclusivo     string `json:"personalExclusivo"`
-	presupuesto           string `json:"presupuesto"`
-	seguridadPublica      string `json:"seguridadPublica"`
-	serviciosLimpia       string `json:"serviciosLimpia"`
-	tramites              string `json:"tramites"`
-	utilidad              string `json:"utilidad"`
+	Administracion        string `json:"administracion"`
+	AguaDrenaje           string `json:"aguaDrenaje"`
+	Alumbrado             string `json:"alumbrado"`
+	CallesParquesJardines string `json:"callesParquesJardines"`
+	ColaboradoresAcceso   string `json:"colaboradoresAcceso"`
+	Comentarios           string `json:"comentarios"`
+	DuplicarTrabajo       string `json:"duplicarTrabajo"`
+	Fecha                 string `json:"fecha"`
+	HorasDia              string `json:"horasDia"`
+	InfraestructuraNube   string `json:""`
+	ManejoDatos           string `json:"manejoDatos"`
+	Mercados              string `json:"mercados"`
+	NombreColaborador     string `json:"nombreColaborador"`
+	PersonalExclusivo     string `json:"personalExclusivo"`
+	Presupuesto           string `json:"presupuesto"`
+	SeguridadPublica      string `json:"seguridadPublica"`
+	ServiciosLimpia       string `json:"serviciosLimpia"`
+	Tramites              string `json:"tramites"`
+	Utilidad              string `json:"utilidad"`
 }
 
 func serverError(err error) (events.APIGatewayProxyResponse, error) {
@@ -63,11 +63,14 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 
 	nuevoRegistro := new(estudio_mercado)
 
-	err := json.Unmarshal([]byte(req.Body), nuevoRegistro)
+	err := json.Unmarshal([]byte(req.Body), &nuevoRegistro)
 	if err != nil {
 		return clientError(http.StatusUnprocessableEntity)
 	}
-	if nuevoRegistro.fecha == "" || nuevoRegistro.nombreColaborador == "" {
+	println(req.Headers["Content-Type"])
+	println(nuevoRegistro.NombreColaborador)
+	println(nuevoRegistro.Fecha)
+	if nuevoRegistro.Fecha == "" || nuevoRegistro.NombreColaborador == "" {
 		return clientError(http.StatusBadRequest)
 	}
 
@@ -87,58 +90,58 @@ func putItem(nuevoRegistro *estudio_mercado) error {
 		TableName: aws.String("Estudio_Mercado"),
 		Item: map[string]*dynamodb.AttributeValue{
 			"administracion": {
-				S: aws.String(nuevoRegistro.administracion),
+				S: aws.String(nuevoRegistro.Administracion),
 			},
 			"aguaDrenaje": {
-				S: aws.String(nuevoRegistro.aguaDrenaje),
+				S: aws.String(nuevoRegistro.AguaDrenaje),
 			},
 			"alumbrado": {
-				S: aws.String(nuevoRegistro.alumbrado),
+				S: aws.String(nuevoRegistro.Alumbrado),
 			},
 			"callesParquesJardines": {
-				S: aws.String(nuevoRegistro.callesParquesJardines),
+				S: aws.String(nuevoRegistro.CallesParquesJardines),
 			},
 			"colaboradoresAcceso": {
-				S: aws.String(nuevoRegistro.colaboradoresAcceso),
+				S: aws.String(nuevoRegistro.ColaboradoresAcceso),
 			},
 			"comentarios": {
-				S: aws.String(nuevoRegistro.comentarios),
+				S: aws.String(nuevoRegistro.Comentarios),
 			},
 			"duplicarTrabajo": {
-				S: aws.String(nuevoRegistro.duplicarTrabajo),
+				S: aws.String(nuevoRegistro.DuplicarTrabajo),
 			},
 			"fecha": {
-				S: aws.String(nuevoRegistro.fecha),
+				S: aws.String(nuevoRegistro.Fecha),
 			},
 			"horasDia": {
-				S: aws.String(nuevoRegistro.horasDia),
+				S: aws.String(nuevoRegistro.HorasDia),
 			},
 			"infraestructuraNube": {
-				S: aws.String(nuevoRegistro.infraestructuraNube),
+				S: aws.String(nuevoRegistro.InfraestructuraNube),
 			},
 			"mercados": {
-				S: aws.String(nuevoRegistro.mercados),
+				S: aws.String(nuevoRegistro.Mercados),
 			},
 			"nombreColaborador": {
-				S: aws.String(nuevoRegistro.nombreColaborador),
+				S: aws.String(nuevoRegistro.NombreColaborador),
 			},
 			"personalExclusivo": {
-				S: aws.String(nuevoRegistro.personalExclusivo),
+				S: aws.String(nuevoRegistro.PersonalExclusivo),
 			},
 			"presupuesto": {
-				S: aws.String(nuevoRegistro.presupuesto),
+				S: aws.String(nuevoRegistro.Presupuesto),
 			},
 			"seguridadPublica": {
-				S: aws.String(nuevoRegistro.seguridadPublica),
+				S: aws.String(nuevoRegistro.SeguridadPublica),
 			},
 			"serviciosLimpia": {
-				S: aws.String(nuevoRegistro.serviciosLimpia),
+				S: aws.String(nuevoRegistro.ServiciosLimpia),
 			},
 			"tramites": {
-				S: aws.String(nuevoRegistro.tramites),
+				S: aws.String(nuevoRegistro.Tramites),
 			},
 			"utilidad": {
-				S: aws.String(nuevoRegistro.utilidad),
+				S: aws.String(nuevoRegistro.Utilidad),
 			},
 		},
 	}
@@ -148,5 +151,10 @@ func putItem(nuevoRegistro *estudio_mercado) error {
 }
 
 func main() {
+	test := events.APIGatewayProxyRequest{
+		Headers: map[string]string{"Content-Type": "application/json"},
+		Body:    `{"nombreColaborador":"Juan Valez","fecha":"2018/08/30"}`,
+	}
+	handler(test)
 	lambda.Start(handler)
 }

@@ -27,7 +27,7 @@ type estudio_mercado struct {
 	DuplicarTrabajo       string `json:"duplicarTrabajo"`
 	Fecha                 string `json:"fecha"`
 	HorasDia              string `json:"horasDia"`
-	InfraestructuraNube   string `json:""`
+	InfraestructuraNube   string `json:"infraestructuraNube"`
 	ManejoDatos           string `json:"manejoDatos"`
 	Mercados              string `json:"mercados"`
 	NombreColaborador     string `json:"nombreColaborador"`
@@ -147,10 +147,5 @@ func putItem(nuevoRegistro *estudio_mercado) error {
 }
 
 func main() {
-	x := events.APIGatewayProxyRequest{
-		Headers: map[string]string{"Content-Type": "application/json"},
-		Body:    "",
-	}
-	handler(x)
 	lambda.Start(handler)
 }

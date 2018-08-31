@@ -44,7 +44,7 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 	}
 
 	nuevoRegistro := new(NewReg)
-	err := json.Unmarshal([]byte(req.Body), &newReg)
+	err := json.Unmarshal([]byte(req.Body), &nuevoRegistro)
 	if err != nil {
 		return clientError(http.StatusUnprocessableEntity)
 	}
@@ -62,7 +62,7 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 	}, nil
 }
 
-func putItem(nuevoRegistro *estudio_mercado) error {
+func putItem(nuevoRegistro *NewReg) error {
 
 	input := &dynamodb.PutItemInput{
 		TableName: aws.String("Names"),

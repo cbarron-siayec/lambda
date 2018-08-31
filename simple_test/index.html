@@ -1,0 +1,28 @@
+<html>
+<head>
+  <script>
+  function post(){
+    var API_URL="https://7stqkd972h.execute-api.us-west-1.amazonaws.com/DEV/nuevoregistro";
+
+    $.ajax({
+        type: 'POST',
+        url: API_URL,
+        data: `{"Name":"Angela Merkel"}`,
+        contentType: "application/json",
+
+        success: function(data){
+          location.reload();
+        }
+    });
+    return false;
+  }
+  </script>
+</head>
+<body>
+  <h1>TEST</h1>
+  <form>
+    <input type="text" id="name" name="name">
+    <button type="submit" id="submit" name="submit" onclick="post()">Submit</button>
+  </form>
+</body>
+</html>

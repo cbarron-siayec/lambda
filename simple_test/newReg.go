@@ -17,7 +17,7 @@ import (
 var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
 var db = dynamodb.New(session.New(), aws.NewConfig().WithRegion("us-west-1"))
 
-type newReg struct {
+type NewReg struct {
 	Name string `json:"Name"`
 }
 
@@ -43,7 +43,7 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 		return clientError(http.StatusNotAcceptable)
 	}
 
-	nuevoRegistro := new(newReg)
+	nuevoRegistro := new(NewReg)
 	err := json.Unmarshal([]byte(req.Body), &newReg)
 	if err != nil {
 		return clientError(http.StatusUnprocessableEntity)

@@ -58,12 +58,11 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 	}
 	return events.APIGatewayProxyResponse{
 		StatusCode: 201,
-		Headers:    map[string]string{"Registro": fmt.Sprintln(req), "Content-Type": "application/json", "Access-Control-Allow-Origin": "*"},
+		Headers:    map[string]string{"Registro": fmt.Sprintln(req), "Contentttttt-Type": "application/json", "Access-Control-Allow-Origin": "*"},
 	}, nil
 }
 
 func putItem(nuevoRegistro *NewReg) error {
-
 	input := &dynamodb.PutItemInput{
 		TableName: aws.String("Names"),
 		Item: map[string]*dynamodb.AttributeValue{

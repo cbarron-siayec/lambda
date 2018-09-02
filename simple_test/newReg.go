@@ -57,10 +57,10 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 		return serverError(err)
 	}
 	return events.APIGatewayProxyResponse{
-		StatusCode: 201,
-		Headers:    map[string]string{"Registro": fmt.Sprintln(req)},
-								"Content-Type": "application/json",
-								"Access-Control-Allow-Origin": "*"
+		StatusCode:                    201,
+		Headers:                       map[string]string{"Registro": fmt.Sprintln(req)},
+		"Content-Type":                "application/json",
+		"Access-Control-Allow-Origin": "*",
 	}, nil
 }
 

@@ -40,7 +40,7 @@ func clientError(status int) (events.APIGatewayProxyResponse, error) {
 func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
 	if req.Headers["Content-Type"] != "application/json" {
-		return clientError(http.StatusNotAcceptable)
+		return clientError(http.StatusMovedPermanently)
 	}
 
 	nuevoRegistro := new(NewReg)
@@ -58,12 +58,7 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 	}
 	return events.APIGatewayProxyResponse{
 		StatusCode: 201,
-		Headers: map[string]string{"Registro": fmt.Sprintln(req),
-			"Access-Control-Allow-Headers": "Content-Type",
-			"Content-Type":                 "application/json",
-			"Access-Control-Allow-Origin":  "*",
-			"Access-Control.Methods":       "POST",
-		},
+		Headers:    map[string]string{"Registro": fmt.Sprintln(req), "Access-Control-Allow-Origin": "*"},
 	}, nil
 }
 

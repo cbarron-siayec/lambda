@@ -1,9 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Send data JavaScript -->
-    <script src="javascript/sendData.js"></script>
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,7 +11,6 @@
     <title>SIM-SIAYEC</title>
   </head>
   <body>
-    <button onclick="test()">Tests</button>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm">
@@ -159,7 +155,7 @@
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="duplicarTrabajo_f" value="f">
+                    <input class="form-check-input" type="radio" name="duplicarTrabajo" id="duplicarTrabajo_f" value="f">
                     <label class="form-check-label" for="duplicarTrabajo">
                       Falso
                     </label>
@@ -220,49 +216,49 @@
             <p>De acuerdo a las actividades diarias de un presidente municipal, la información que es relevante para la gobernabilidad del municipio, así como la opinión y exigencias de los ciudadanos ¿Que indicadores le parecen relevantes?</p>
             <div class="form-group">
               <label for="seguridadPublica">Seguridad Publica</label>
-              <textarea class="form-control" id="seguridadPublica" name="seguridadPublica" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de seguridad pública?"></textarea>
+              <textarea class="form-control" id="seguridadPublica" name="seguridadPublica" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de seguridad pública?" required="true"></textarea>
             </div>
 
             <div class="form-group">
               <label for="seguridadPublica">Calles, Parques y jardines.</label>
-              <textarea class="form-control" id="callesParquesJardines" name="callesParquesJardines" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de mantenimiento de calles, parques y jardines?"></textarea>
+              <textarea class="form-control" id="callesParquesJardines" name="callesParquesJardines" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de mantenimiento de calles, parques y jardines?" required="true"></textarea>
             </div>
 
             <div class="form-group">
               <label for="seguridadPublica">Agua y Drenaje.</label>
-              <textarea class="form-control" id="aguaDrenaje" name="aguaDrenaje" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de agua y drenaje?"></textarea>
+              <textarea class="form-control" id="aguaDrenaje" name="aguaDrenaje" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de agua y drenaje?" required="true"></textarea>
             </div>
 
             <div class="form-group">
               <label for="seguridadPublica">Limpia y Recolección de Basura.</label>
-              <textarea class="form-control" id="serviciosLimpia" name="serviciosLimpia" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de limpia y recolección de basura?"></textarea>
+              <textarea class="form-control" id="serviciosLimpia" name="serviciosLimpia" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de limpia y recolección de basura?" required="true"></textarea>
             </div>
 
             <div class="form-group">
               <label for="seguridadPublica">Alumbrado Púbilco.</label>
-              <textarea class="form-control" id="alumbrado" name="alumbrado" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del alumbrado público?"></textarea>
+              <textarea class="form-control" id="alumbrado" name="alumbrado" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del alumbrado público?" required="true"></textarea>
             </div>
 
             <div class="form-group">
               <label for="seguridadPublica">Trámites Municipales.</label>
-              <textarea class="form-control" id="tramites" name="tramites" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar la facilidad y calidad de tramites municipales?"></textarea>
+              <textarea class="form-control" id="tramites" name="tramites" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar la facilidad y calidad de tramites municipales?" required="true"></textarea>
             </div>
 
             <div class="form-group">
               <label for="seguridadPublica">Mercados, rastros y panteones.</label>
-              <textarea class="form-control" id="mercados" name="mercados" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de la administración de mercados, rastros y panteones?"></textarea>
+              <textarea class="form-control" id="mercados" name="mercados" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de la administración de mercados, rastros y panteones?" required="true"></textarea>
             </div>
 
             <div class="form-group">
               <label for="seguridadPublica">Administración y Contraloría Municipal.</label>
-              <textarea class="form-control" id="administracion" name="administracion" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de la administración y contraloría municipal?"></textarea>
+              <textarea class="form-control" id="administracion" name="administracion" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de la administración y contraloría municipal?" required="true"></textarea>
             </div>
 
             <div class="form-group">
               <label for="seguridadPublica">Comentarios e Indicadores Adicionales.</label>
-              <textarea class="form-control" id="mercados" name="mercados" rows="5" placeholder="¿Tiene algún comentario relevante adicional o algún otro indicador que debamos tomar en cuenta?"></textarea>
+              <textarea class="form-control" id="comentarios" name="comentarios" rows="5" placeholder="¿Tiene algún comentario relevante adicional o algún otro indicador que debamos tomar en cuenta?" required="true"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" onsubmit="postData()">Submit</button>
           </form>
         </div>
         <div class="col-sm"></div>
@@ -275,5 +271,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="javascript/postData.js"></script>
   </body>
 </html>

@@ -39,10 +39,6 @@ func clientError(status int) (events.APIGatewayProxyResponse, error) {
 
 func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
-	if req.Headers["Content-Type"] != "application/json" {
-		return clientError(http.StatusMovedPermanently)
-	}
-
 	nuevoRegistro := new(NewReg)
 	err := json.Unmarshal([]byte(req.Body), &nuevoRegistro)
 	if err != nil {

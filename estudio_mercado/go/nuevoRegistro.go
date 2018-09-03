@@ -57,10 +57,6 @@ func clientError(status int) (events.APIGatewayProxyResponse, error) {
 
 func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
-	if req.Headers["Content-Type"] != "application/json" {
-		return clientError(http.StatusNotAcceptable)
-	}
-
 	nuevoRegistro := new(estudio_mercado)
 	err := json.Unmarshal([]byte(req.Body), &nuevoRegistro)
 	if err != nil {

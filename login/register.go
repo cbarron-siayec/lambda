@@ -9,9 +9,10 @@ import (
 
 func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEventUserPoolsPreSignupResponse, error) {
 	preSignUp.Response.AutoConfirmUser = false
-	domain := strings.SplitAfter(preSignUp.UserName, "@")[1]
+	domain := strings.SplitAfter(preSignUp.Request.UserAttributes["email"], "@")
+	clean := domain[0]
 	ourDomain := "grupo-siayec.com.mx"
-	if ourDomain == domain {
+	if ourDomain == clean {
 		preSignUp.Response.AutoConfirmUser = true
 		return preSignUp.Response, nil
 	}

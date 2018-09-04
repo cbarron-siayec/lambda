@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEventUserPoolsPreSignupResponse, error) {
+func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEventUserPoolsPreSignup, error) {
 	preSignUp.Response.AutoConfirmUser = false
 	domain := strings.SplitAfter(preSignUp.Request.UserAttributes["email"], "@")
 	clean := domain[1]
@@ -16,10 +16,10 @@ func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEve
 	if ourDomain == clean {
 		preSignUp.Response.AutoConfirmUser = true
 		log.Print("User: " + preSignUp.Request.UserAttributes["email"] + " confirmed")
-		return preSignUp.Response, nil
+		return preSignUp, nil
 	}
 	log.Print("User: " + preSignUp.Request.UserAttributes["email"] + " was not confirmed")
-	return preSignUp.Response, nil
+	return preSignUp, nil
 }
 
 func main() {

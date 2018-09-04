@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -9,8 +10,11 @@ import (
 
 func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEventUserPoolsPreSignupResponse, error) {
 	preSignUp.Response.AutoConfirmUser = false
+	log.Print("Log")
 	domain := strings.SplitAfter(preSignUp.Request.UserAttributes["email"], "@")
+	log.Print(preSignUp.Request.UserAttributes["email"])
 	clean := domain[0]
+	log.Print(clean)
 	ourDomain := "grupo-siayec.com.mx"
 	if ourDomain == clean {
 		preSignUp.Response.AutoConfirmUser = true

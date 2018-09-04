@@ -11,6 +11,9 @@ import (
 func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEventUserPoolsPreSignupResponse, error) {
 	preSignUp.Response.AutoConfirmUser = false
 	log.Print("Log")
+	log.Print("Log")
+	log.Print("Log")
+	log.Print("Log")
 	domain := strings.SplitAfter(preSignUp.Request.UserAttributes["email"], "@")
 	log.Print(preSignUp.Request.UserAttributes["email"])
 	clean := domain[0]

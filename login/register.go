@@ -9,16 +9,16 @@ import (
 )
 
 func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEventUserPoolsPreSignup, error) {
-	preSignUp.Response.AutoConfirmUser = false
 	domain := strings.SplitAfter(preSignUp.Request.UserAttributes["email"], "@")
 	clean := domain[1]
 	ourDomain := "grupo-siayec.com.mx"
 	if ourDomain == clean {
-		preSignUp.Response.AutoConfirmUser = true
-		log.Print("User: " + preSignUp.Request.UserAttributes["email"] + " confirmed")
+		log.Print("User: " + preSignUp.Request.UserAttributes["email"] + " created")
 		return preSignUp, nil
 	}
-	log.Print("User: " + preSignUp.Request.UserAttributes["email"] + " was not confirmed")
+	log.Print("User: " + preSignUp.Request.UserAttributes["email"] + " domain not allowed")
+	preSignUp.Request.UserAttributes["username"] = ""
+	preSignUp.Request.UserAttributes["email"] = ""
 	return preSignUp, nil
 }
 

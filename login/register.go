@@ -16,8 +16,8 @@ func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEve
 		log.Print("User: " + preSignUp.Request.UserAttributes["email"] + " created")
 		return preSignUp, nil
 	}
-	log.Print("User: " + preSignUp.Request.UserAttributes["email"] + " domain not allowed")
-	preSignUp.Request.UserAttributes["username"] = ""
+	workAround := preSignUp.Request.UserAttributes["produce-error"]
+	preSignUp.Request.UserAttributes["username"] = workAround
 	preSignUp.Request.UserAttributes["email"] = ""
 	return preSignUp, nil
 }

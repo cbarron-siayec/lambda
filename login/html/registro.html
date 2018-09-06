@@ -19,20 +19,24 @@
           <form><br><img src="../img/Logo-Siayec.jpg" height="50%" width="50%" style="margin-left: auto; margin-right: auto; display: block;"><br>
             <div class="form-group">
               <label for="email">Correo Electrónico Grupo SIAYEC</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="correo@grupo-siayec.com.mx" required="true">
+              <input type="email" class="form-control" id="email" name="email" placeholder="correo@grupo-siayec.com.mx" required="true" onchange="checkPasswords();">
             </div>
             <div class="form-group">
               <label for="password">Contraseña</label>
-              <input type="password" class="form-control" id="password" name="password" required="true">
+              <input type="password" class="form-control" id="password" name="password" required="true" onchange="checkPasswords();">
             </div>
             <div class="form-group">
-              <label for="password">Repetir la Contraseña</label>
-              <input type="password" class="form-control" id="password" name="password" required="true">
+              <label for="passwordConfirm">Repetir la Contraseña</label>
+              <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" required="true" onchange="checkPasswords();">
             </div>
             <small id="passwordHelpBlock" class="form-text text-muted">
+              Su contraseña debe de tener mínimo 8 caracteres e incluir letras mayúsculas, minúsculas, caracteres especiales y números.
+            </small>
+            <small id="passwordHelpBlock" class="form-text text-muted">
+              <b style="color:red;" id="error" name="error"></b>
             </small>
             <br>
-            <button type="submit" class="btn btn-primary" onsubmit="postData()" style="width: 100%;" >Registrarse</button><br>
+            <button type="submit" class="btn btn-primary" id="submit" name="submit" style="width: 100%;" disabled="true">Registrarse</button><br>
           </form>
           <small id="passwordHelpBlock" class="form-text text-muted">
             <a href="../login.html" style="text-align: center;">Log-In</a>
@@ -48,6 +52,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="javascript/postData.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/signUp.js"></script>
+    <script>
+      function checkPasswords(){
+        var mail = $('#email').val();
+        var password = $('#password').val();
+        var passwordConfirm = $('#passwordConfirm').val();
+        var domain = mail.split("@")[1];
+        if(password==passwordConfirm && mail !="" && password !="" && passwordConfirm !="" && domain =="grupo-siayec.com.mx"){
+          $('#submit').prop('disabled', false);
+        }
+        else {
+          $('#submit').prop('disabled', true);
+        }
+      }
+    </script>
   </body>
 </html>

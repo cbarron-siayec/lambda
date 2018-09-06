@@ -7,7 +7,7 @@
     $.ajax({
         type: 'POST',
         url: API_URL,
-        body: JSON.stringify({"Name":$('#name').val()}),
+        data: JSON.stringify({"Name":$('#name').val()}),
         contentType: "application/json",
 
         success: function(data){

@@ -28,8 +28,11 @@
             <small id="passwordHelpBlock" class="form-text text-muted">
               <a href="html/recuperar-contraseña.html" style="text-align: right;">¿Olvidaste la Contraseña?</a>
             </small>
+            <small id="passwordHelpBlock" class="form-text text-muted">
+              <b style="color:red;" id="error" name="error"></b>
+            </small>
             <br>
-            <button type="submit" class="btn btn-primary" onsubmit="postData()" style="width: 100%;" >Log-In</button><br>
+            <button type="submit" class="btn btn-primary" style="width: 100%;" >Log-In</button><br>
           </form>
           <small id="passwordHelpBlock" class="form-text text-muted">
             <a href="html/registro.html" style="text-align: center;">Registrarse</a>
@@ -44,6 +47,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="javascript/postData.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/login.js"></script>
   </body>
 </html>

@@ -9,8 +9,10 @@ import (
 )
 
 func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEventUserPoolsPreSignup, error) {
-	domain := strings.SplitAfter(preSignUp.Request.UserAttributes["username"], "@")
-	preSignUp.Request.UserAttributes["email"] = preSignUp.Request.UserAttributes["username"]
+	domain := strings.SplitAfter(preSignUp.UserName, "@")
+	log.Print(preSignUp.UserName)
+	log.Print(domain)
+	preSignUp.Request.UserAttributes["email"] = preSignUp.UserName
 	clean := domain[1]
 	ourDomain := "grupo-siayec.com.mx"
 	if ourDomain == clean {

@@ -18,11 +18,16 @@
         <div class="col-sm" style="background-color:white;">
           <form id="validateCode"><br><img src="../img/Logo-Siayec.jpg" height="50%" width="50%" style="margin-left: auto; margin-right: auto; display: block;"><br>
             <div class="form-group">
-              <label for="email">Código de Validación</label>
-              <input type="password" class="form-control" id="codigo" name="codigo" required="true">
+              <label for="email">Correo Electrónico</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="correo@grupo-siayec.com.mx" required="true" onkeyup="checkLogin();">
             </div>
+            <div class="form-group">
+              <label for="codigo">Código de Validación</label>
+              <input type="number" class="form-control" id="codigo" name="codigo" required="true" placeholder="Solo números" onkeyup="checkLogin();">
+            </div>
+            <small class="form-text text-muted"><b style="color:red;" id="error" name="error"></b></small>
             <br>
-            <button type="submit" class="btn btn-primary" style="width: 100%;" >Validar correo electrónico</button>
+            <button type="submit" id="validateSubmit" class="btn btn-primary" style="width: 100%;" disabled="false">Validar correo electrónico</button>
             <small id="passwordHelpBlock" class="form-text text-muted">
               Escriba el código de validación enviado a su correo electrónico.
             </small>

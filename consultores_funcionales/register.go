@@ -12,7 +12,6 @@ func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEve
 	log.Print(preSignUp.UserName)
 	domain := strings.SplitAfter(preSignUp.UserName, "@")
 	log.Print(domain)
-	preSignUp.Request.UserAttributes["email"] = preSignUp.UserName
 	clean := domain[1]
 	ourDomain := "grupo-siayec.com.mx"
 	if ourDomain == clean {

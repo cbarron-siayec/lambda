@@ -9,8 +9,8 @@ import (
 )
 
 func handler(preSignUp events.CognitoEventUserPoolsPreSignup) (events.CognitoEventUserPoolsPreSignup, error) {
-	domain := strings.SplitAfter(preSignUp.UserName, "@")
 	log.Print(preSignUp.UserName)
+	domain := strings.SplitAfter(preSignUp.UserName, "@")
 	log.Print(domain)
 	preSignUp.Request.UserAttributes["email"] = preSignUp.UserName
 	clean := domain[1]

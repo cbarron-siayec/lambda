@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('form').submit(function(event) {
+  $('#loginForm').submit(function(event) {
       event.preventDefault();
       var username = $('#email').val();
       var password = $('#password').val();
@@ -15,7 +15,7 @@ $(document).ready(function() {
 
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-          window.location.href = "./html/recuperar-contraseña.html";
+          window.location.href = "./html/presentacion.html";
           console.log(result);
         },
         onFailure: function(err) {

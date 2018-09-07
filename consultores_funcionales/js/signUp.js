@@ -10,7 +10,7 @@ $(document).ready(function() {
           return;
         }
         console.log(result);
-        window.location.href = "../login.html";
+        window.location.href = "./validar-correo-electronico.html";
       });
   });
 });

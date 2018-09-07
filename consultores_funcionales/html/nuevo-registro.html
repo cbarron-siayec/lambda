@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <title>SIM-SIAYEC</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <!-- Empieza NAVBAR-->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="https://grupo-siayec.com.mx/" target="_blank"><img src="../img/Logo-Siayec.jpg" alt="Grupo SIAYEC" height="35%" width="35%"> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <button class="btn btn-primary my-2 my-sm-0" onclick="redirectNewReg();">Regresar a Presentación</button>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="../index.html" onclick="logout();">Salir</a>
+            </div>
+          </li>
+          </ul>
+        </ul>
+        <ul>
+        </div>
+
+      </nav>
+      <!-- Termina NAVBAR-->
+      <div class="row">
+        <div class="col-sm">
+          <br><h1>Cuestionario Líder Funcional</h1><br><br>
+          <form>
+            <div class="form-group">
+              <label for="nombre">Nombre Completo Líder Funcional</label>
+              <input type="text" class="form-control" id="nombreColaborador" name="nombreColaborador" placeholder="Escriba su nombre" required="true">
+            </div>
+            <div class="form-group">
+              <label for="fecha">Fecha</label>
+              <input type="date" class="form-control" id="fecha" name="fecha" required="true">
+            </div>
+
+            <fieldset class="form-group">
+                <h6>
+                  El presupuesto para proyectos de este índole es aproximadamente:
+                </h6>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="presupuesto" id="presupuesto_a" value="a" checked>
+                    <label class="form-check-label" for="presupuesto_a">
+                      a) Por debajo de los $75,000 más IVA.
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="presupuesto" id="presupuesto_b" value="b">
+                    <label class="form-check-label" for="presupuesto_b">
+                      b) Por debajo de los $120,000 más IVA.
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="presupuesto" id="presupuesto_c" value="c">
+                    <label class="form-check-label" for="presupuesto_c">
+                      c) Por debajo de los $200,000 más IVA.
+                    </label>
+                  </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <h6>
+                  ¿Cuantas horas al día deberá ocupar el personal a cargo para subir la información?
+                </h6>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="horasDia" id="horasDia_a" value="a" checked>
+                    <label class="form-check-label" for="horasDia_a">
+                      a) 30 / 60 min.
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="horasDia" id="horasDia_b" value="b">
+                    <label class="form-check-label" for="horasDia_b">
+                      b) 2 hr.
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="horasDia" id="horasDia_c" value="c">
+                    <label class="form-check-label" for="horasDia_c">
+                      c) Más de 2 hr.
+                    </label>
+                  </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <h6>
+                  Se deberá asignar personal exclusivamente para estas tareas.
+                </h6>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="personalExclusivo" id="personalExclusivo_v" value="v" checked>
+                    <label class="form-check-label" for="personalExclusivo_v">
+                      Cierto
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="personalExclusivo" id="personalExclusivo_f" value="f">
+                    <label class="form-check-label" for="personalExclusivo_f">
+                      Falso
+                    </label>
+                  </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <h6>
+                  Existe algún problema con respecto a la carga y el manejo de los datos en caso de que se realicen las cargas sin datos personales
+                </h6>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="manejoDatos" id="manejoDatos_v" value="v" checked>
+                    <label class="form-check-label" for="manejoDatos">
+                      Cierto
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="manejoDatos" id="manejoDatos_f" value="f">
+                    <label class="form-check-label" for="manejoDatos">
+                      Falso
+                    </label>
+                  </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <h6>
+                  Se duplicará el trabajo de los colaboradores del ayuntamiento al realizar la carga del sistema además del llenado de documentos existentes.
+                </h6>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="duplicarTrabajo" id="duplicarTrabajo_v" value="v" checked>
+                    <label class="form-check-label" for="duplicarTrabajo">
+                      Cierto
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="duplicarTrabajo" id="duplicarTrabajo_f" value="f">
+                    <label class="form-check-label" for="duplicarTrabajo">
+                      Falso
+                    </label>
+                  </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <h6>
+                  ¿Percibe algún tipo de inseguridad al alojar la infraestructura e información del sistema fuera de las instalaciones del ayuntamiento?
+                </h6>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="infraestructuraNube" id="infraestructuraNube_v" value="v" checked>
+                    <label class="form-check-label" for="infraestructuraNube_v">
+                      Cierto
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="infraestructuraNube" id="infraestructuraNube_f" value="f">
+                    <label class="form-check-label" for="infraestructuraNube_f">
+                      Falso
+                    </label>
+                  </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <h6>
+                  Cuantos colaboradores además del presidente municipal deberán de tener acceso a los tableros analíticos
+                </h6>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="colaboradoresAcceso" id="colaboradoresAcceso_a" value="a" checked>
+                    <label class="form-check-label" for="colaboradoresAcceso_a">
+                      a) 0-1
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="colaboradoresAcceso" id="colaboradoresAcceso_b" value="b">
+                    <label class="form-check-label" for="colaboradoresAcceso_b">
+                      b) 2-5
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="colaboradoresAcceso" id="colaboradoresAcceso_c" value="c">
+                    <label class="form-check-label" for="colaboradoresAcceso_c">
+                      c) 5-10
+                    </label>
+                  </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+              <label for="nombre">Del 1 al 10 que tan útil será este tipo de sistema</label>
+              <input type="number" max="10" min="1" class="form-control" id="utilidad" name="utilidad" placeholder="1-10" required="true">
+            </div>
+            <p>De acuerdo a las actividades diarias de un presidente municipal, la información que es relevante para la gobernabilidad del municipio, así como la opinión y exigencias de los ciudadanos ¿Que indicadores le parecen relevantes?</p>
+            <div class="form-group">
+              <label for="seguridadPublica">Seguridad Publica</label>
+              <textarea class="form-control" id="seguridadPublica" name="seguridadPublica" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de seguridad pública?" required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="seguridadPublica">Calles, Parques y jardines.</label>
+              <textarea class="form-control" id="callesParquesJardines" name="callesParquesJardines" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de mantenimiento de calles, parques y jardines?" required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="seguridadPublica">Agua y Drenaje.</label>
+              <textarea class="form-control" id="aguaDrenaje" name="aguaDrenaje" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de agua y drenaje?" required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="seguridadPublica">Limpia y Recolección de Basura.</label>
+              <textarea class="form-control" id="serviciosLimpia" name="serviciosLimpia" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del servicio de limpia y recolección de basura?" required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="seguridadPublica">Alumbrado Púbilco.</label>
+              <textarea class="form-control" id="alumbrado" name="alumbrado" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño del alumbrado público?" required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="seguridadPublica">Trámites Municipales.</label>
+              <textarea class="form-control" id="tramites" name="tramites" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar la facilidad y calidad de tramites municipales?" required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="seguridadPublica">Mercados, rastros y panteones.</label>
+              <textarea class="form-control" id="mercados" name="mercados" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de la administración de mercados, rastros y panteones?" required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="seguridadPublica">Administración y Contraloría Municipal.</label>
+              <textarea class="form-control" id="administracion" name="administracion" rows="5" placeholder="¿Qué indicadores crees relevantes para evaluar el desempeño de la administración y contraloría municipal?" required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="seguridadPublica">Comentarios e Indicadores Adicionales.</label>
+              <textarea class="form-control" id="comentarios" name="comentarios" rows="5" placeholder="¿Tiene algún comentario relevante adicional o algún otro indicador que debamos tomar en cuenta?" required="true"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" onsubmit="postData()">Submit</button>
+          </form>
+        </div>
+        <div class="col-sm"></div>
+      </div>
+    </div>
+    <br><h1>¡Muchas gracias por su apoyo!</h1><br><br>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/postData.js"></script>
+    <script src="../js/check-auth.js"></script>
+    <script src="../js/logout.js"></script>
+    <script>
+    function redirectNewReg(){
+      window.location.href = "./presentacion.html";
+    }
+    </script>
+  </body>
+</html>

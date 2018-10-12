@@ -21,6 +21,7 @@ func handler(ctx context.Context, kinesisEvent events.KinesisEvent) error {
 		dataBytes := kinesisRecord.Data
 		dataText := string(dataBytes)
 		log.Print(record.Kinesis.Data)
+		log.Print(dataText)
 
 	}
 	return nil

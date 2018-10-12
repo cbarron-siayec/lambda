@@ -15,10 +15,10 @@ type Records struct {
 }
 
 type KinesisAnalyticsEvent struct {
-	InvocationId   string  `json:"invocationId"`
-	ApplicationArn string  `json:"applicationArn"`
-	StreamArn      string  `json:"streamArn"`
-	Record         Records `json:"records"`
+	InvocationId   string    `json:"invocationId"`
+	ApplicationArn string    `json:"applicationArn"`
+	StreamArn      string    `json:"streamArn"`
+	Record         []Records `json:"records"`
 }
 
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {

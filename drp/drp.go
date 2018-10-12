@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	_ "encoding/base64"
+	"encoding/base64"
 	"fmt"
 	"log"
 
@@ -22,7 +22,9 @@ type KinesisAnalyticsEvent struct {
 }
 
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
-	log.Print("DATA: " + string(kinesisEvent.Record[0].Data))
+	encoded := kinesisEvent.Record[0].Data
+	decoded, _ := base64.StdEncoding.DecodeString(encoded)
+	log.Print("DATA: " + string(decoded))
 	log.Print(kinesisEvent.ApplicationArn)
 	log.Print(kinesisEvent.StreamArn)
 	return fmt.Sprintf("Data BASE64: " + kinesisEvent.ApplicationArn), nil

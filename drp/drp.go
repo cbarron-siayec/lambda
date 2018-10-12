@@ -7,8 +7,9 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func handler(kinesisEvent events.KinesisRecord) error {
+func handler(kinesisEvent events.KinesisEvent) error {
 	log.Print(kinesisEvent)
+	log.Print(kinesisEvent.Records[0].EventSourceArn)
 	return nil
 }
 

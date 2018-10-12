@@ -22,7 +22,7 @@ type KinesisAnalyticsEvent struct {
 }
 
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
-	log.Print(kinesisEvent.InvocationId)
+	log.Print("DATA: " + kinesisEvent.Record[0].Data)
 	log.Print(kinesisEvent.ApplicationArn)
 	log.Print(kinesisEvent.StreamArn)
 	return fmt.Sprintf("Data BASE64: " + kinesisEvent.ApplicationArn), nil

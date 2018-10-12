@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 	"log"
 	"strconv"
 
@@ -26,11 +25,14 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
 	res, err := strconv.ParseInt(string(decoded), 10, 64)
+	log.Print("DATA: " + string(decoded))
 	if err != nil {
 		return "", err
 	}
-	log.Print("DATA: " + string(decoded))
-	return fmt.Sprintf("Data BASE64: " + string(res)), nil
+	if res > 2 {
+		return "ok", nil
+	}
+	return string(decoded), nil
 }
 
 func main() {

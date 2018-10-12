@@ -1,17 +1,30 @@
 package main
 
 import (
+	"context"
+	_ "encoding/base64"
+	"fmt"
 	"log"
 
-	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func handler(kinesisEvent events.KinesisEvent) error {
-	log.Print("---ini---")
-	log.Print("Parte A: " + kinesisEvent.Records[0].EventSourceArn)
-	log.Print("---fin---")
-	return nil
+type Records struct {
+	RecordId                      string `json:"recordId"`
+	KinesisFirehoseRecordMetadata string `json:"kinesisFirehoseRecordMetadata"`
+	Data                          string `json:"data"`
+}
+
+type KinesisAnalyticsEvent struct {
+	InvocationId   string  `json:"invocationId"`
+	ApplicationArn string  `json:"applicationArn"`
+	StreamArn      string  `json:"streamArn"`
+	Record         Records `json:"streamArn"`
+}
+
+func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
+	log.Print("Data BASE64: " + kinesisEvent.Record.Data)
+	return fmt.Sprintf("Data BASE64: " + kinesisEvent.Record.Data), nil
 }
 
 func main() {

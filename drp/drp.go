@@ -10,21 +10,21 @@ import (
 )
 
 type Records struct {
-	RecordId                      string `json:"recordId"`
-	KinesisFirehoseRecordMetadata string `json:"kinesisFirehoseRecordMetadata"`
-	Data                          string `json:"data"`
+	RecordId string `json:"recordId"`
+	Data     string `json:"data"`
 }
 
 type KinesisAnalyticsEvent struct {
 	InvocationId   string  `json:"invocationId"`
 	ApplicationArn string  `json:"applicationArn"`
 	StreamArn      string  `json:"streamArn"`
-	Record         Records `json:"streamArn"`
+	Record         Records `json:"records"`
 }
 
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
-	log.Print("Data BASE64: " + kinesisEvent.ApplicationArn)
-	log.Print(ctx.Value("applicationArn"))
+	log.Print(kinesisEvent.InvocationId)
+	log.Print(kinesisEvent.ApplicationArn)
+	log.Print(kinesisEvent.StreamArn)
 	return fmt.Sprintf("Data BASE64: " + kinesisEvent.ApplicationArn), nil
 }
 

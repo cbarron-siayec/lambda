@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -10,13 +9,19 @@ import (
 )
 
 func handler(ctx context.Context, kinesisEvent events.KinesisEvent) error {
+	log.Print(kinesisEvent)
+	log.Print(kinesisEvent.Records[0].Kinesis.ApproximateArrivalTimestamp)
+	log.Print(kinesisEvent.Records[0].Kinesis.EncryptionType)
+	log.Print(kinesisEvent.Records[0].Kinesis.KinesisSchemaVersion)
+	log.Print(kinesisEvent.Records[0].Kinesis.PartitionKey)
+	log.Print(kinesisEvent.Records[0].Kinesis.SequenceNumber)
+	log.Print(kinesisEvent.Records[0].Kinesis.Data)
 	for _, record := range kinesisEvent.Records {
 		kinesisRecord := record.Kinesis
 		dataBytes := kinesisRecord.Data
 		dataText := string(dataBytes)
+		log.Print(record.Kinesis.Data)
 
-		fmt.Printf("%s Data = %s \n", record.EventName, dataText)
-		log.Print("%s Data = %s \n", record.EventName, dataText)
 	}
 	return nil
 }

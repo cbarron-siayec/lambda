@@ -4,10 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log"
-	_ "strings"
 
-	_ "github.com/aws/aws-lambda-go/events"
-	_ "github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
 func handler(ctx context.Context, kinesisEvent events.KinesisEvent) error {

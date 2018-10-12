@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/aws/aws-lambda-go/lambda"
 )
@@ -24,10 +25,12 @@ type KinesisAnalyticsEvent struct {
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
+	res, err := strconv.ParseInt(string(decoded), 10, 64)
+	if err != nil {
+		return "", err
+	}
 	log.Print("DATA: " + string(decoded))
-	log.Print(kinesisEvent.ApplicationArn)
-	log.Print(kinesisEvent.StreamArn)
-	return fmt.Sprintf("Data BASE64: " + kinesisEvent.ApplicationArn), nil
+	return fmt.Sprintf("Data BASE64: " + string(res)), nil
 }
 
 func main() {

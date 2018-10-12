@@ -24,11 +24,11 @@ type KinesisAnalyticsEvent struct {
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
+	log.Print("DATA: " + string(decoded))
 	res, err := strconv.ParseInt(string(decoded), 10, 64)
 	if err != nil {
 		return "Not OK", nil
 	}
-	log.Print("DATA: " + string(decoded))
 	if res > 2 {
 		return "OK", nil
 	}

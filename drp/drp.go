@@ -8,8 +8,7 @@ import (
 )
 
 func handler(kinesisEvent events.KinesisEvent) error {
-	log.Print(kinesisEvent)
-	log.Print(kinesisEvent.Records[0].EventSourceArn)
+	log.Print("Parte A: " + kinesisEvent.Records[0].EventSourceArn)
 	return nil
 }
 

@@ -29,7 +29,6 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
 	blips := new(Blip)
-	log.Print(string(decoded))
 	err := json.Unmarshal([]byte(decoded), &blips)
 	if err != nil {
 		log.Print("Not OK: " + err.Error())
@@ -40,6 +39,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 		log.Print(string(res))
 		return string(res), nil
 	}
+	log.Print(string(res))
 	return string(decoded), nil
 }
 

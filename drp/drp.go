@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"log"
-	"strconv"
 
 	"github.com/aws/aws-lambda-go/lambda"
 )
@@ -36,11 +35,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 		log.Print("Not OK: " + err.Error())
 		return err.Error(), nil
 	}
-	res, err := strconv.ParseInt(blips.BLIP_COUNT, 10, 64)
-	if err != nil {
-		log.Print("Not OK" + err.Error())
-		return "Not OK", nil
-	}
+	res := blips.BLIP_COUNT
 	if res > 0 {
 		log.Print(string(res))
 		return string(res), nil

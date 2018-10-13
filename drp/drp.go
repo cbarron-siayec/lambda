@@ -36,12 +36,12 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 	}
 	log.Print(blips.BLIP_COUNT)
 	res := blips.BLIP_COUNT
-	if res > 0 {
-		log.Print("On If" + string(res))
+	if blips.BLIP_COUNT > 0 {
+		log.Print("On If" + string(blips.BLIP_COUNT))
 		return string(res), nil
 	}
-	log.Print("Out of if" + string(res))
-	return string(decoded), nil
+	log.Print("Out of if" + string(blips.BLIP_COUNT))
+	return string(blips.BLIP_COUNT), nil
 }
 
 func main() {

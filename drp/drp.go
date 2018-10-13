@@ -33,12 +33,12 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 	log.Print(string(decoded))
 	err := json.Unmarshal([]byte(decoded), &blips)
 	if err != nil {
-		log.Print("Not OK")
+		log.Print("Not OK: " + err.Error())
 		return err.Error(), nil
 	}
 	res, err := strconv.ParseInt(blips.BLIP_COUNT, 10, 64)
 	if err != nil {
-		log.Print("Not OK")
+		log.Print("Not OK" + err.Error())
 		return "Not OK", nil
 	}
 	if res > 0 {

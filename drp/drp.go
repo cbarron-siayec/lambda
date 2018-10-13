@@ -10,7 +10,7 @@ import (
 )
 
 type Blip struct {
-	BLIP_COUNT int `json:"BLIP_COUNT"`
+	NUMBER_OF_DISTINCT_ITEMS int `json:"NUMBER_OF_DISTINCT_ITEMS"`
 }
 
 type Records struct {
@@ -34,14 +34,14 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, erro
 		log.Print(err.Error())
 		return -1, nil
 	}
-	if blips.BLIP_COUNT > 0 {
+	if blips.NUMBER_OF_DISTINCT_ITEMS > 0 {
 		log.Print("System OK with blips:")
-		log.Print(blips.BLIP_COUNT)
-		return blips.BLIP_COUNT, nil
+		log.Print(blips.NUMBER_OF_DISTINCT_ITEMS)
+		return blips.NUMBER_OF_DISTINCT_ITEMS, nil
 	}
 	log.Print("System is Offline, admin warning ON")
-	log.Print(blips.BLIP_COUNT)
-	return blips.BLIP_COUNT, nil
+	log.Print(blips.NUMBER_OF_DISTINCT_ITEMS)
+	return blips.NUMBER_OF_DISTINCT_ITEMS, nil
 }
 
 func main() {

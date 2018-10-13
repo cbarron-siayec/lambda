@@ -31,15 +31,15 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 	blips := new(Blip)
 	err := json.Unmarshal([]byte(decoded), &blips)
 	if err != nil {
-		log.Print("Not OK: " + err.Error())
+		log.Print(err.Error())
 		return err.Error(), nil
 	}
 	res := blips.BLIP_COUNT
 	if res > 0 {
-		log.Print(string(res))
+		log.Print("On If" + string(res))
 		return string(res), nil
 	}
-	log.Print(string(res))
+	log.Print("Out of if" + string(res))
 	return string(decoded), nil
 }
 

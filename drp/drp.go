@@ -3,11 +3,16 @@ package main
 import (
 	"context"
 	"encoding/base64"
+	"encoding/json"
 	"log"
 	"strconv"
 
 	"github.com/aws/aws-lambda-go/lambda"
 )
+
+type Blip struct {
+	BLIP_COUNT string `json:"BLIP_COUNT"`
+}
 
 type Records struct {
 	RecordId string `json:"recordId"`
@@ -22,10 +27,16 @@ type KinesisAnalyticsEvent struct {
 }
 
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
+	log.Print("Array length: " + string(len(kinesisEvent.Record)))
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
-	log.Print("DATA: " + string(decoded))
-	res, err := strconv.ParseInt(string(decoded), 10, 64)
+	blips := new(Blip)
+	err := json.Unmarshal([]byte(decoded), &blips)
+	if err != nil {
+		log.Print("Not OK")
+		return "Not OK", nil
+	}
+	res, err := strconv.ParseInt(blips.BLIP_COUNT, 10, 64)
 	if err != nil {
 		log.Print("Not OK")
 		return "Not OK", nil

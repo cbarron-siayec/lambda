@@ -11,7 +11,7 @@ import (
 )
 
 type Blip struct {
-	BLIP_COUNT string `json:"BLIP_COUNT"`
+	BLIP_COUNT int `json:"BLIP_COUNT"`
 }
 
 type Records struct {

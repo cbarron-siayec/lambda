@@ -36,10 +36,12 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, erro
 	}
 	log.Print(blips.BLIP_COUNT)
 	if blips.BLIP_COUNT > 0 {
-		log.Print("On If" + string(blips.BLIP_COUNT))
+		log.Print("System OK with blips:")
+		log.Print(blips.BLIP_COUNT)
 		return blips.BLIP_COUNT, nil
 	}
-	log.Print("Out of if" + string(blips.BLIP_COUNT))
+	log.Print("System is Offline, admin warning ON")
+	log.Print(blips.BLIP_COUNT)
 	return blips.BLIP_COUNT, nil
 }
 

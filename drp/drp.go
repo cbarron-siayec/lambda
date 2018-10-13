@@ -27,14 +27,13 @@ type KinesisAnalyticsEvent struct {
 }
 
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
-	log.Print("Array length: " + string(len(kinesisEvent.Record)))
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
 	blips := new(Blip)
 	err := json.Unmarshal([]byte(decoded), &blips)
 	if err != nil {
 		log.Print("Not OK")
-		return "Not OK", nil
+		return err.Error(), nil
 	}
 	res, err := strconv.ParseInt(blips.BLIP_COUNT, 10, 64)
 	if err != nil {

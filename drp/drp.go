@@ -32,7 +32,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 	}
 	if res > 0 {
 		log.Print(string(res))
-		return res, nil
+		return string(res), nil
 	}
 	return string(decoded), nil
 }

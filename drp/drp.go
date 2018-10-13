@@ -25,23 +25,22 @@ type KinesisAnalyticsEvent struct {
 	Record         []Records `json:"records"`
 }
 
-func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, error) {
+func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, error) {
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
 	blips := new(Blip)
 	err := json.Unmarshal([]byte(decoded), &blips)
 	if err != nil {
 		log.Print(err.Error())
-		return err.Error(), nil
+		return -1, nil
 	}
 	log.Print(blips.BLIP_COUNT)
-	res := blips.BLIP_COUNT
 	if blips.BLIP_COUNT > 0 {
 		log.Print("On If" + string(blips.BLIP_COUNT))
-		return string(res), nil
+		return blips.BLIP_COUNT, nil
 	}
 	log.Print("Out of if" + string(blips.BLIP_COUNT))
-	return string(blips.BLIP_COUNT), nil
+	return blips.BLIP_COUNT, nil
 }
 
 func main() {

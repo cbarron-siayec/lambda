@@ -34,7 +34,6 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, erro
 		log.Print(err.Error())
 		return -1, nil
 	}
-	log.Print(blips.BLIP_COUNT)
 	if blips.BLIP_COUNT > 0 {
 		log.Print("System OK with blips:")
 		log.Print(blips.BLIP_COUNT)

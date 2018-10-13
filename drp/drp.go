@@ -27,10 +27,12 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (string, e
 	log.Print("DATA: " + string(decoded))
 	res, err := strconv.ParseInt(string(decoded), 10, 64)
 	if err != nil {
+		log.Print("Not OK")
 		return "Not OK", nil
 	}
-	if res > 2 {
-		return "OK", nil
+	if res > 0 {
+		log.Print(string(res))
+		return res, nil
 	}
 	return string(decoded), nil
 }

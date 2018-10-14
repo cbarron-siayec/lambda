@@ -7,7 +7,9 @@ import (
 	"log"
 
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/aws/aws-sdk-go/aws/request"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/sns"
 )
 
 type Blip struct {
@@ -26,15 +28,17 @@ type KinesisAnalyticsEvent struct {
 	Record         []Records `json:"records"`
 }
 
-func (c *sns) PublishRequest(input *PublishInput) (req *request.Request, output *PublishOutput) {
-	req, resp := client.PublishRequest(params)
-	err := req.Send()
-	if err == nil { // resp is now filled
-		log.Println(resp)
-	}
-}
-
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, error) {
+	sess := session.Must(session.NewSession())
+	svc := sns.New(sess)
+	paramsOK := &sns.PublishInput{
+		Message:  aws.String("OK"),
+		TopicArn: aws.String("arn:aws:sns:us-east-1:890650648390:SERVER_HEALTH"),
+	}
+	paramsNotOK := &sns.PublishInput{
+		Message:  aws.String("El servidor esta fuera de linea, si quiere activar el DRP acceda a la siguiente liga http://www.google.com"),
+		TopicArn: aws.String("arn:aws:sns:us-east-1:890650648390:SERVER_HEALTH"),
+	}
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
 	blips := new(Blip)
@@ -46,10 +50,20 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, erro
 	if blips.BLIPS > 0 {
 		log.Print("System OK with blips:")
 		log.Print(blips.BLIPS)
+		resp, err := svc.Publish(paramsOK)
+		if err != nil {
+			log.Print(err.Error())
+		}
+		log.Print(resp)
 		return blips.BLIPS, nil
 	}
 	log.Print("System is Offline, admin warning ON")
 	log.Print(blips.BLIPS)
+	resp, err := svc.Publish(paramsNotOK)
+	if err != nil {
+		log.Print(err.Error())
+	}
+	log.Print(resp)
 	return blips.BLIPS, nil
 }
 

@@ -29,11 +29,6 @@ type KinesisAnalyticsEvent struct {
 }
 
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, error) {
-	if apiEvent.HTTPMethod == "POST" {
-		log.Print(apiEvent.QueryStringParameters["code"])
-		log.Print("POSTED!")
-		return -1, nil
-	}
 	sess := session.Must(session.NewSession())
 	svc := sns.New(sess)
 	paramsOK := &sns.PublishInput{

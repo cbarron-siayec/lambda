@@ -7,10 +7,11 @@ import (
 	"log"
 
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-sdk-go/aws/request"
 )
 
 type Blip struct {
-	NUMBER_OF_DISTINCT_ITEMS int `json:"NUMBER_OF_DISTINCT_ITEMS"`
+	BLIPS int `json:"BLIPS"`
 }
 
 type Records struct {
@@ -25,6 +26,14 @@ type KinesisAnalyticsEvent struct {
 	Record         []Records `json:"records"`
 }
 
+func (c *sns) PublishRequest(input *PublishInput) (req *request.Request, output *PublishOutput) {
+	req, resp := client.PublishRequest(params)
+	err := req.Send()
+	if err == nil { // resp is now filled
+		log.Println(resp)
+	}
+}
+
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, error) {
 	encoded := kinesisEvent.Record[0].Data
 	decoded, _ := base64.StdEncoding.DecodeString(encoded)
@@ -34,14 +43,14 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, erro
 		log.Print(err.Error())
 		return -1, nil
 	}
-	if blips.NUMBER_OF_DISTINCT_ITEMS > 0 {
+	if blips.BLIPS > 0 {
 		log.Print("System OK with blips:")
-		log.Print(blips.NUMBER_OF_DISTINCT_ITEMS)
-		return blips.NUMBER_OF_DISTINCT_ITEMS, nil
+		log.Print(blips.BLIPS)
+		return blips.BLIPS, nil
 	}
 	log.Print("System is Offline, admin warning ON")
-	log.Print(blips.NUMBER_OF_DISTINCT_ITEMS)
-	return blips.NUMBER_OF_DISTINCT_ITEMS, nil
+	log.Print(blips.BLIPS)
+	return blips.BLIPS, nil
 }
 
 func main() {

@@ -5,12 +5,14 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"log"
+	"net/http"
+	"os"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sns"
-	"github.com/aws/aws-lambda-go/events"
 )
 
 var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
@@ -47,14 +49,14 @@ type KinesisAnalyticsEvent struct {
 }
 
 func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent, apiEvent events.APIGatewayProxyRequest) (int, events.APIGatewayProxyResponse, error) {
-	if apiEvent.HTTPMethod = "POST" {
+	if apiEvent.HTTPMethod == "POST" {
 		log.Print(apiEvent.QueryStringParameters["code"])
 		log.Print("POSTED!")
-		return -1,events.APIGatewayProxyResponse{
+		return -1, events.APIGatewayProxyResponse{
 			StatusCode: 200,
 			Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
 			Body:       "DRP Initiated",
-		} ,nil
+		}, nil
 	}
 	sess := session.Must(session.NewSession())
 	svc := sns.New(sess)
@@ -72,11 +74,11 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent, apiEvent e
 	err := json.Unmarshal([]byte(decoded), &blips)
 	if err != nil {
 		log.Print(err.Error())
-		return -1,events.APIGatewayProxyResponse{
+		return -1, events.APIGatewayProxyResponse{
 			StatusCode: 200,
 			Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
 			Body:       string("Error converting Kinesis"),
-		} ,nil
+		}, nil
 	}
 	if blips.BLIPS > 0 {
 		log.Print("System OK with blips:")
@@ -90,7 +92,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent, apiEvent e
 			StatusCode: 200,
 			Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
 			Body:       string("Machine Up"),
-		} ,nil
+		}, nil
 	}
 	log.Print("System is Offline, admin warning ON")
 	log.Print(blips.BLIPS)
@@ -103,7 +105,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent, apiEvent e
 		StatusCode: 200,
 		Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
 		Body:       string("System is Offline, admin warning ON"),
-	} ,nil
+	}, nil
 }
 
 func main() {

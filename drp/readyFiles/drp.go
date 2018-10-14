@@ -5,32 +5,12 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"log"
-	"net/http"
-	"os"
 
-	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sns"
 )
-
-var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
-
-func serverError(err error) (events.APIGatewayProxyResponse, error) {
-	errorLogger.Println(err.Error())
-	return events.APIGatewayProxyResponse{
-		StatusCode: http.StatusInternalServerError,
-		Body:       http.StatusText(http.StatusInternalServerError),
-	}, nil
-}
-
-func clientError(status int) (events.APIGatewayProxyResponse, error) {
-	return events.APIGatewayProxyResponse{
-		StatusCode: status,
-		Body:       http.StatusText(status),
-	}, nil
-}
 
 type Blip struct {
 	BLIPS int `json:"BLIPS"`
@@ -48,15 +28,11 @@ type KinesisAnalyticsEvent struct {
 	Record         []Records `json:"records"`
 }
 
-func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent, apiEvent events.APIGatewayProxyRequest) (int, events.APIGatewayProxyResponse, error) {
+func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, error) {
 	if apiEvent.HTTPMethod == "POST" {
 		log.Print(apiEvent.QueryStringParameters["code"])
 		log.Print("POSTED!")
-		return -1, events.APIGatewayProxyResponse{
-			StatusCode: 200,
-			Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
-			Body:       "DRP Initiated",
-		}, nil
+		return -1, nil
 	}
 	sess := session.Must(session.NewSession())
 	svc := sns.New(sess)
@@ -74,11 +50,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent, apiEvent e
 	err := json.Unmarshal([]byte(decoded), &blips)
 	if err != nil {
 		log.Print(err.Error())
-		return -1, events.APIGatewayProxyResponse{
-			StatusCode: 200,
-			Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
-			Body:       string("Error converting Kinesis"),
-		}, nil
+		return -1, nil
 	}
 	if blips.BLIPS > 0 {
 		log.Print("System OK with blips:")
@@ -88,11 +60,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent, apiEvent e
 			log.Print(err.Error())
 		}
 		log.Print(resp)
-		return blips.BLIPS, events.APIGatewayProxyResponse{
-			StatusCode: 200,
-			Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
-			Body:       string("Machine Up"),
-		}, nil
+		return blips.BLIPS, nil
 	}
 	log.Print("System is Offline, admin warning ON")
 	log.Print(blips.BLIPS)
@@ -101,11 +69,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent, apiEvent e
 		log.Print(err.Error())
 	}
 	log.Print(resp)
-	return blips.BLIPS, events.APIGatewayProxyResponse{
-		StatusCode: 200,
-		Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
-		Body:       string("System is Offline, admin warning ON"),
-	}, nil
+	return blips.BLIPS, nil
 }
 
 func main() {

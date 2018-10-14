@@ -7,6 +7,9 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
 var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
@@ -27,7 +30,20 @@ func clientError(status int) (events.APIGatewayProxyResponse, error) {
 }
 
 func handler(apiEvent events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	sess := session.Must(session.NewSession())
+	svc := ec2.New(sess)
+	params := &ec2.StartInstancesInput{
+		InstanceIds: []*string{aws.String("i-086aa92b6469493ef")},
+	}
 	if apiEvent.HTTPMethod == "POST" && apiEvent.QueryStringParameters["code"] == "@S!4y3c." {
+		resp, err := svc.StartInstances(params)
+		if err != nil {
+			return events.APIGatewayProxyResponse{
+				StatusCode: 200,
+				Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},
+				Body:       resp.StartingInstances[0].CurrentState.String(),
+			}, nil
+		}
 		return events.APIGatewayProxyResponse{
 			StatusCode: 200,
 			Headers:    map[string]string{"Headers": `[Content-Type:application/json]`},

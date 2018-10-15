@@ -36,7 +36,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, erro
 		TopicArn: aws.String("arn:aws:sns:us-east-1:890650648390:SERVER_HEALTH"),
 	}
 	paramsNotOK := &sns.PublishInput{
-		Message:  aws.String("El servidor esta fuera de linea, para activar el DRP introduzca el codigo: @S!4y3c. en la siguiente liga https://s3.amazonaws.com/gsiayec-drp-start/index.html"),
+		Message:  aws.String("Servidor offline, codigo: @S!4y3c. https://s3.amazonaws.com/gsiayec-drp-start/index.html"),
 		TopicArn: aws.String("arn:aws:sns:us-east-1:890650648390:SERVER_HEALTH"),
 	}
 	encoded := kinesisEvent.Record[0].Data

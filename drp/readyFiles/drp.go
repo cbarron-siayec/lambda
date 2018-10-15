@@ -32,7 +32,7 @@ func handler(ctx context.Context, kinesisEvent KinesisAnalyticsEvent) (int, erro
 	sess := session.Must(session.NewSession())
 	svc := sns.New(sess)
 	paramsOK := &sns.PublishInput{
-		Message:  aws.String("El servidor esta en linea, ESTATUS:OK, https://480lkm2mnb.execute-api.us-east-1.amazonaws.com/PRO/startInstance?code=@S!4y3c."),
+		Message:  aws.String("El servidor esta en linea, ESTATUS:OK"),
 		TopicArn: aws.String("arn:aws:sns:us-east-1:890650648390:SERVER_HEALTH"),
 	}
 	paramsNotOK := &sns.PublishInput{

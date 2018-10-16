@@ -96,7 +96,8 @@ func handler(ctx context.Context) (int, error) {
 	blip := new(Blip)
 	test, err := getItem("D4m0")
 	if err != nil {
-		return -15, nil
+		log.Print(err)
+		return 100, nil
 	}
 
 	switch test.Snapcount {
@@ -180,6 +181,7 @@ func handler(ctx context.Context) (int, error) {
 		}
 		callbackEC2, err := svc.StartInstances(paramsEC2)
 		if err != nil {
+			log.Print(err)
 			return -15, nil
 		}
 		log.Print(callbackEC2)

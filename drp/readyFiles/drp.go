@@ -43,8 +43,6 @@ func getItem(id string) (*Blip, error) {
 		log.Print(err)
 		return nil, err
 	}
-	log.Print(result)
-
 	blip := new(Blip)
 	err = dynamodbattribute.UnmarshalMap(result.Item, &blip)
 	if err != nil {
@@ -56,6 +54,10 @@ func getItem(id string) (*Blip, error) {
 }
 
 func putItem(nuevoRegistro *Blip) error {
+	log.Print(nuevoRegistro)
+	log.Print(nuevoRegistro.Author)
+	log.Print(nuevoRegistro.ID)
+	log.Print(nuevoRegistro.Timestamp)
 	input := &dynamodb.PutItemInput{
 		TableName: aws.String("Server_Health"),
 		Item: map[string]*dynamodb.AttributeValue{
@@ -76,13 +78,15 @@ func putItem(nuevoRegistro *Blip) error {
 			},
 		},
 	}
-
+	log.Print(input)
 	putItemCallback, err := db.PutItem(input)
 	if err != nil {
 		log.Print(putItemCallback)
 		log.Print(err)
 		return err
 	}
+	log.Print(putItemCallback)
+
 	return err
 }
 
@@ -102,12 +106,6 @@ func handler(ctx context.Context) (int, error) {
 		log.Print(err)
 		return 200, nil
 	}
-	log.Print(blip)
-	log.Print(blip.Author)
-	log.Print(blip.ID)
-	log.Print(blip.Snapcount + 201)
-	log.Print(blip.Status)
-	log.Print(blip.Timestamp)
 
 	switch blip.Snapcount {
 	case 1:

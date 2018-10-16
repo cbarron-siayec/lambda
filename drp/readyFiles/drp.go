@@ -48,7 +48,6 @@ func getItem(id string) (*Blip, error) {
 		log.Print(err)
 		return nil, err
 	}
-	log.Print(blip.Author)
 	return blip, nil
 }
 
@@ -107,7 +106,7 @@ func handler(ctx context.Context) (int, error) {
 			Status:    "OK",
 			Snapcount: 0,
 		})
-		log.Print("System OK with blips:" + string(blip.Snapcount))
+		log.Print("System OK with blips:" + strconv.Itoa(blip.Snapcount))
 		return blip.Snapcount, nil
 	case 0:
 		putItem(&Blip{
@@ -117,12 +116,12 @@ func handler(ctx context.Context) (int, error) {
 			Status:    "Alert 1",
 			Snapcount: -1,
 		})
-		log.Print("System is Offline, admin warning ON Snapcount is:" + string(blip.Snapcount))
+		log.Print("System is Offline, admin warning ON Snapcount is:" + strconv.Itoa(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)
 		if err != nil {
 			log.Print(err)
 		}
-		log.Print(resp)
+		log.Print(resp.String())
 		return blip.Snapcount, nil
 	case -1:
 		putItem(&Blip{
@@ -132,12 +131,12 @@ func handler(ctx context.Context) (int, error) {
 			Status:    "Alert 1",
 			Snapcount: -2,
 		})
-		log.Print("System is Offline, admin warning ON Snapcount is:" + string(blip.Snapcount))
+		log.Print("System is Offline, admin warning ON Snapcount is:" + strconv.Itoa(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)
 		if err != nil {
 			log.Print(err)
 		}
-		log.Print(resp)
+		log.Print(resp.String())
 		return blip.Snapcount, nil
 	case -2:
 		putItem(&Blip{
@@ -147,12 +146,12 @@ func handler(ctx context.Context) (int, error) {
 			Status:    "Alert 2",
 			Snapcount: -3,
 		})
-		log.Print("System is Offline, admin warning ON Snapcount is:" + string(blip.Snapcount))
+		log.Print("System is Offline, admin warning ON Snapcount is:" + strconv.Itoa(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)
 		if err != nil {
 			log.Print(err)
 		}
-		log.Print(resp)
+		log.Print(resp.String())
 		return blip.Snapcount, nil
 	case -3:
 		putItem(&Blip{
@@ -167,7 +166,7 @@ func handler(ctx context.Context) (int, error) {
 		if err != nil {
 			log.Print(err)
 		}
-		log.Print(resp)
+		log.Print(resp.String())
 		svc := ec2.New(sess)
 		paramsEC2 := &ec2.StartInstancesInput{
 			InstanceIds: []*string{aws.String("i-086aa92b6469493ef")},

@@ -38,6 +38,7 @@ func getItem(id string) (*Blip, error) {
 	}
 	result, err := db.GetItem(input)
 	if err != nil {
+		log.Print(err)
 		return nil, err
 	}
 	if result.Item == nil {
@@ -46,8 +47,8 @@ func getItem(id string) (*Blip, error) {
 
 	blip := new(Blip)
 	err = dynamodbattribute.UnmarshalMap(result.Item, blip)
-
 	if err != nil {
+		log.Print(err)
 		return nil, err
 	}
 	return blip, nil
@@ -76,15 +77,14 @@ func putItem(nuevoRegistro *Blip) error {
 	}
 
 	_, err := db.PutItem(input)
-	return err
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func handler(ctx context.Context) (int, error) {
 	svc := sns.New(sess)
-	paramsOK := &sns.PublishInput{
-		Message:  aws.String("El servidor esta en linea, ESTATUS:OK"),
-		TopicArn: aws.String("arn:aws:sns:us-east-1:890650648390:SERVER_HEALTH"),
-	}
 	paramsNotOK := &sns.PublishInput{
 		Message:  aws.String("Servidor offline, codigo: @S!4y3c. https://s3.amazonaws.com/gsiayec-drp-start/index.html"),
 		TopicArn: aws.String("arn:aws:sns:us-east-1:890650648390:SERVER_HEALTH"),
@@ -93,14 +93,15 @@ func handler(ctx context.Context) (int, error) {
 		Message:  aws.String("DRP, esta por comenzar automáticamente si no toma una acción"),
 		TopicArn: aws.String("arn:aws:sns:us-east-1:890650648390:SERVER_HEALTH"),
 	}
-	blip := new(Blip)
-	test, err := getItem("D4m0")
+
+	blip, err := getItem("D4m0")
+	log.Print("DB Search Snapcount: " + string(blip.Snapcount))
 	if err != nil {
 		log.Print(err)
 		return 100, nil
 	}
 
-	switch test.Snapcount {
+	switch blip.Snapcount {
 	case 1:
 		putItem(&Blip{
 			ID:        "D4m0",
@@ -110,11 +111,6 @@ func handler(ctx context.Context) (int, error) {
 			Snapcount: 0,
 		})
 		log.Print("System OK with blips:" + string(blip.Snapcount))
-		resp, err := svc.Publish(paramsOK)
-		if err != nil {
-			log.Print(err.Error())
-		}
-		log.Print(resp)
 		return blip.Snapcount, nil
 	case 0:
 		putItem(&Blip{
@@ -125,9 +121,11 @@ func handler(ctx context.Context) (int, error) {
 			Snapcount: -1,
 		})
 		log.Print("System is Offline, admin warning ON Snapcount is:" + string(blip.Snapcount))
+		resp, err := svc.Publish(paramsNotOK)
 		if err != nil {
-			log.Print(err.Error())
+			log.Print(err)
 		}
+		log.Print(resp)
 		return blip.Snapcount, nil
 	case -1:
 		putItem(&Blip{
@@ -140,7 +138,7 @@ func handler(ctx context.Context) (int, error) {
 		log.Print("System is Offline, admin warning ON Snapcount is:" + string(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)
 		if err != nil {
-			log.Print(err.Error())
+			log.Print(err)
 		}
 		log.Print(resp)
 		return blip.Snapcount, nil
@@ -155,7 +153,7 @@ func handler(ctx context.Context) (int, error) {
 		log.Print("System is Offline, admin warning ON Snapcount is:" + string(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)
 		if err != nil {
-			log.Print(err.Error())
+			log.Print(err)
 		}
 		log.Print(resp)
 		return blip.Snapcount, nil
@@ -170,7 +168,7 @@ func handler(ctx context.Context) (int, error) {
 		log.Print("System is Offline, DRP will be implemented now:" + string(blip.Snapcount))
 		resp, err := svc.Publish(paramsCritical)
 		if err != nil {
-			log.Print(err.Error())
+			log.Print(err)
 		}
 		log.Print(resp)
 		svc := ec2.New(sess)

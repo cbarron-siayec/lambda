@@ -11,6 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/aws/aws-sdk-go/service/sns"
 )
 
@@ -149,7 +150,7 @@ func handler(ctx context.Context) (int, error) {
 			ID:        "D4m0",
 			Author:    "AMZ",
 			Timestamp: time.Now().UTC().String(),
-			Status:    "Alert 1",
+			Status:    "Alert 2",
 			Snapcount: -3,
 		})
 		log.Print("System is Offline, admin warning ON Snapcount is:" + string(blip.Snapcount))
@@ -164,7 +165,7 @@ func handler(ctx context.Context) (int, error) {
 			ID:        "D4m0",
 			Author:    "AMZ",
 			Timestamp: time.Now().UTC().String(),
-			Status:    "Alert 1",
+			Status:    "Alert 3",
 			Snapcount: -5,
 		})
 		log.Print("System is Offline, DRP will be implemented now:" + string(blip.Snapcount))
@@ -173,6 +174,15 @@ func handler(ctx context.Context) (int, error) {
 			log.Print(err.Error())
 		}
 		log.Print(resp)
+		svc := ec2.New(sess)
+		paramsEC2 := &ec2.StartInstancesInput{
+			InstanceIds: []*string{aws.String("i-086aa92b6469493ef")},
+		}
+		callbackEC2, err := svc.StartInstances(paramsEC2)
+		if err != nil {
+			return -15, nil
+		}
+		log.Print(callbackEC2)
 		return blip.Snapcount, nil
 	default:
 		putItem(&Blip{
@@ -180,11 +190,11 @@ func handler(ctx context.Context) (int, error) {
 			Author:    "AMZ",
 			Timestamp: time.Now().UTC().String(),
 			Status:    "Monitor Error",
-			Snapcount: -15,
+			Snapcount: -30,
 		})
 	}
 
-	return -30, nil
+	return -45, nil
 }
 
 func main() {

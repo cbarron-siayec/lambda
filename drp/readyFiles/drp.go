@@ -76,8 +76,10 @@ func putItem(nuevoRegistro *Blip) error {
 		},
 	}
 
-	_, err := db.PutItem(input)
+	putItemCallback, err := db.PutItem(input)
 	if err != nil {
+		log.Print(putItemCallback)
+		log.Print(err)
 		return err
 	}
 	return nil

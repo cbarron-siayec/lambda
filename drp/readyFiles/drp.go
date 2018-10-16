@@ -82,7 +82,7 @@ func putItem(nuevoRegistro *Blip) error {
 		log.Print(err)
 		return err
 	}
-	return nil
+	return err
 }
 
 func handler(ctx context.Context) (int, error) {
@@ -100,7 +100,7 @@ func handler(ctx context.Context) (int, error) {
 	log.Print("DB Search Snapcount: " + string(blip.Snapcount))
 	if err != nil {
 		log.Print(err)
-		return 100, nil
+		return 200, nil
 	}
 
 	switch blip.Snapcount {

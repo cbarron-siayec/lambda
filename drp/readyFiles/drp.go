@@ -105,7 +105,7 @@ func handler(ctx context.Context) (int, error) {
 	log.Print(blip)
 	log.Print(blip.Author)
 	log.Print(blip.ID)
-	log.Print(blip.Snapcount)
+	log.Print(blip.Snapcount + 201)
 	log.Print(blip.Status)
 	log.Print(blip.Timestamp)
 

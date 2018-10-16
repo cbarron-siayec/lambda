@@ -25,7 +25,7 @@ type Blip struct {
 
 var sess = session.Must(session.NewSession())
 var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
-var db = dynamodb.New(sess, aws.NewConfig().WithRegion("us-west-1"))
+var db = dynamodb.New(sess, aws.NewConfig().WithRegion("us-east-1"))
 
 func getItem(id string) (*Blip, error) {
 	input := &dynamodb.GetItemInput{

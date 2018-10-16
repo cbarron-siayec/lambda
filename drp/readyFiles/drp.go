@@ -28,6 +28,7 @@ var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
 var db = dynamodb.New(sess, aws.NewConfig().WithRegion("us-east-1"))
 
 func getItem(id string) (*Blip, error) {
+	log.Print(id)
 	input := &dynamodb.GetItemInput{
 		TableName: aws.String("Server_Health"),
 		Key: map[string]*dynamodb.AttributeValue{
@@ -36,14 +37,13 @@ func getItem(id string) (*Blip, error) {
 			},
 		},
 	}
+	log.Print(input)
 	result, err := db.GetItem(input)
 	if err != nil {
 		log.Print(err)
 		return nil, err
 	}
-	if result.Item == nil {
-		return nil, nil
-	}
+	log.Print(result)
 
 	blip := new(Blip)
 	err = dynamodbattribute.UnmarshalMap(result.Item, blip)
@@ -51,6 +51,7 @@ func getItem(id string) (*Blip, error) {
 		log.Print(err)
 		return nil, err
 	}
+	log.Print(blip.Author)
 	return blip, nil
 }
 

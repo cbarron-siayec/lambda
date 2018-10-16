@@ -125,11 +125,9 @@ func handler(ctx context.Context) (int, error) {
 			Snapcount: -1,
 		})
 		log.Print("System is Offline, admin warning ON Snapcount is:" + string(blip.Snapcount))
-		resp, err := svc.Publish(paramsNotOK)
 		if err != nil {
 			log.Print(err.Error())
 		}
-		log.Print(resp)
 		return blip.Snapcount, nil
 	case -1:
 		putItem(&Blip{

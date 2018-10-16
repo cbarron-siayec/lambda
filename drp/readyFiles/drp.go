@@ -46,7 +46,7 @@ func getItem(id string) (*Blip, error) {
 	log.Print(result)
 
 	blip := new(Blip)
-	err = dynamodbattribute.UnmarshalMap(result.Item, blip)
+	err = dynamodbattribute.UnmarshalMap(result.Item, &blip)
 	if err != nil {
 		log.Print(err)
 		return nil, err

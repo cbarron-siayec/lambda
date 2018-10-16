@@ -103,6 +103,11 @@ func handler(ctx context.Context) (int, error) {
 		return 200, nil
 	}
 	log.Print(blip)
+	log.Print(blip.Author)
+	log.Print(blip.ID)
+	log.Print(blip.Snapcount)
+	log.Print(blip.Status)
+	log.Print(blip.Timestamp)
 
 	switch blip.Snapcount {
 	case 1:

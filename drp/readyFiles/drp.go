@@ -98,11 +98,11 @@ func handler(ctx context.Context) (int, error) {
 	}
 
 	blip, err := getItem("D4m0")
-	log.Print("DB Search Snapcount: " + string(blip.Snapcount))
 	if err != nil {
 		log.Print(err)
 		return 200, nil
 	}
+	log.Print(blip)
 
 	switch blip.Snapcount {
 	case 1:

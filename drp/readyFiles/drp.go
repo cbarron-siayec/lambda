@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
@@ -54,10 +56,6 @@ func getItem(id string) (*Blip, error) {
 }
 
 func putItem(nuevoRegistro *Blip) error {
-	log.Print(nuevoRegistro)
-	log.Print(nuevoRegistro.Author)
-	log.Print(nuevoRegistro.ID)
-	log.Print(nuevoRegistro.Timestamp)
 	input := &dynamodb.PutItemInput{
 		TableName: aws.String("Server_Health"),
 		Item: map[string]*dynamodb.AttributeValue{
@@ -78,15 +76,30 @@ func putItem(nuevoRegistro *Blip) error {
 			},
 		},
 	}
-	log.Print(input)
-	putItemCallback, err := db.PutItem(input)
+	result, err := db.PutItem(input)
 	if err != nil {
-		log.Print(putItemCallback)
-		log.Print(err)
-		return err
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case dynamodb.ErrCodeConditionalCheckFailedException:
+				fmt.Println(dynamodb.ErrCodeConditionalCheckFailedException, aerr.Error())
+			case dynamodb.ErrCodeProvisionedThroughputExceededException:
+				fmt.Println(dynamodb.ErrCodeProvisionedThroughputExceededException, aerr.Error())
+			case dynamodb.ErrCodeResourceNotFoundException:
+				fmt.Println(dynamodb.ErrCodeResourceNotFoundException, aerr.Error())
+			case dynamodb.ErrCodeItemCollectionSizeLimitExceededException:
+				fmt.Println(dynamodb.ErrCodeItemCollectionSizeLimitExceededException, aerr.Error())
+			case dynamodb.ErrCodeInternalServerError:
+				fmt.Println(dynamodb.ErrCodeInternalServerError, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
 	}
-	log.Print(putItemCallback)
-
+	log.Print(result)
 	return err
 }
 

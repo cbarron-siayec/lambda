@@ -169,7 +169,7 @@ func handler(ctx context.Context) (int, error) {
 		log.Print(resp.String())
 		svc := ec2.New(sess)
 		paramsEC2 := &ec2.StartInstancesInput{
-			InstanceIds: []*string{aws.String("i-086aa92b6469493ef")},
+			InstanceIds: []*string{aws.String("i-0720a0a34dc424244")},
 		}
 		callbackEC2, err := svc.StartInstances(paramsEC2)
 		if err != nil {

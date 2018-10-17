@@ -33,7 +33,7 @@ func handler(apiEvent events.APIGatewayProxyRequest) (events.APIGatewayProxyResp
 	sess := session.Must(session.NewSession())
 	svc := ec2.New(sess)
 	params := &ec2.StartInstancesInput{
-		InstanceIds: []*string{aws.String("i-086aa92b6469493ef")},
+		InstanceIds: []*string{aws.String("i-0720a0a34dc424244")},
 	}
 	if apiEvent.HTTPMethod == "POST" && apiEvent.QueryStringParameters["code"] == "@S!4y3c." {
 		resp, err := svc.StartInstances(params)

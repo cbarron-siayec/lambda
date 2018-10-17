@@ -161,7 +161,7 @@ func handler(ctx context.Context) (int, error) {
 			Status:    "Alert 3",
 			Snapcount: -5,
 		})
-		log.Print("System is Offline, DRP will be implemented now:" + string(blip.Snapcount))
+		log.Print("System is Offline, DRP will be implemented now:" + strconv.Itoa(blip.Snapcount))
 		resp, err := svc.Publish(paramsCritical)
 		if err != nil {
 			log.Print(err)
@@ -183,7 +183,7 @@ func handler(ctx context.Context) (int, error) {
 			ID:        "D4m0",
 			Author:    "AMZ",
 			Timestamp: time.Now().UTC().String(),
-			Status:    "Monitor Error",
+			Status:    "Monitor Error or DRP Started",
 			Snapcount: -30,
 		})
 	}

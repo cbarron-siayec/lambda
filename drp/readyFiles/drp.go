@@ -114,7 +114,7 @@ func handler(ctx context.Context) (int, error) {
 			Author:    "AMZ",
 			Timestamp: time.Now().UTC().String(),
 			Status:    "Alert 1",
-			Snapcount: -1,
+			Snapcount: -3,
 		})
 		log.Print("System is Offline, admin warning ON Snapcount is:" + strconv.Itoa(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)
@@ -129,7 +129,7 @@ func handler(ctx context.Context) (int, error) {
 			Author:    "AMZ",
 			Timestamp: time.Now().UTC().String(),
 			Status:    "Alert 1",
-			Snapcount: -2,
+			Snapcount: -3,
 		})
 		log.Print("System is Offline, admin warning ON Snapcount is:" + strconv.Itoa(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)

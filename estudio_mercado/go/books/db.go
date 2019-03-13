@@ -9,12 +9,12 @@ import (
 
 var db = dynamodb.New(session.New(), aws.NewConfig().WithRegion("us-west-1"))
 
-func getItem(isbn string) (*book, error) {
+func getItem(id string) (*book, error) {
 	input := &dynamodb.GetItemInput{
 		TableName: aws.String("Books"),
 		Key: map[string]*dynamodb.AttributeValue{
-			"ISBN": {
-				S: aws.String(isbn),
+			"ID": {
+				S: aws.String(id),
 			},
 		},
 	}

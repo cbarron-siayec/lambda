@@ -114,7 +114,7 @@ func handler(ctx context.Context) (int, error) {
 			Author:    "AMZ",
 			Timestamp: time.Now().UTC().String(),
 			Status:    "Alert 1",
-			Snapcount: -1,
+			Snapcount: -3,
 		})
 		log.Print("System is Offline, admin warning ON Snapcount is:" + strconv.Itoa(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)
@@ -129,7 +129,7 @@ func handler(ctx context.Context) (int, error) {
 			Author:    "AMZ",
 			Timestamp: time.Now().UTC().String(),
 			Status:    "Alert 1",
-			Snapcount: -2,
+			Snapcount: -3,
 		})
 		log.Print("System is Offline, admin warning ON Snapcount is:" + strconv.Itoa(blip.Snapcount))
 		resp, err := svc.Publish(paramsNotOK)
@@ -169,7 +169,7 @@ func handler(ctx context.Context) (int, error) {
 		log.Print(resp.String())
 		svc := ec2.New(sess)
 		paramsEC2 := &ec2.StartInstancesInput{
-			InstanceIds: []*string{aws.String("i-086aa92b6469493ef")},
+			InstanceIds: []*string{aws.String("i-0720a0a34dc424244")},
 		}
 		callbackEC2, err := svc.StartInstances(paramsEC2)
 		if err != nil {
